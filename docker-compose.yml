@@ -1,0 +1,36 @@
+version: '2'
+services:
+  u2r-s:
+    container_name: u2r-s
+    image: udp2raw-s
+    ports:
+      - "3333:3333/tcp"
+      - "3333:3333/udp"
+    cap_add:
+      - NET_ADMIN
+    environment:
+      - PORT=3333
+      - FORWARD_IP=10.12.10.10
+      - FORWARD_PORT=51820
+      - PASSWORD=passwd
+      - LOG_LEVEL=5
+      - CIPHER_MODE=aes128cbc
+      - AUTH_MODE=md5
+    restart: always
+  u2r-c:
+    container_name: u2r-c
+    image: udp2raw-c
+    ports:
+      - "8880:8880/udp"
+      - "8880:8880/tcp"
+    cap_add:
+      - NET_ADMIN
+    environment:
+      - PORT=8880
+      - FORWARD_IP=188.40.100.158
+      - FORWARD_PORT=8888
+      - PASSWORD=passwd
+      - LOG_LEVEL=5
+      - CIPHER_MODE=aes128cbc
+      - AUTH_MODE=md5
+    restart: always
